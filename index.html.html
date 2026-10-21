@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Happy 20th Monthsary, Khizha</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Poppins:wght@300;400;500&display=swap">
+<style>
+:root{--bg:#fff7f5;--card:#ffffff;--ink:#3a2530;--mute:#8a6f7a;--rose:#c8456b;--rose2:#f3b6c6;--line:#f1d9e0;--shadow:0 10px 30px rgba(200,69,107,.15);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1c1218;--card:#2a1b24;--ink:#f7e8ee;--mute:#c4a2b0;--rose:#ee7f9f;--rose2:#6b2c43;--line:#43293a;--shadow:0 10px 30px rgba(0,0,0,.4);color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#1c1218;--card:#2a1b24;--ink:#f7e8ee;--mute:#c4a2b0;--rose:#ee7f9f;--rose2:#6b2c43;--line:#43293a;--shadow:0 10px 30px rgba(0,0,0,.4);color-scheme:dark}
+html{scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Poppins,system-ui,sans-serif;line-height:1.7;overflow-x:hidden}
+h1,h2,h3{font-family:'Playfair Display',Georgia,serif;margin:0}
+canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:1}
+#cover{position:fixed;inset:0;z-index:50;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;transition:opacity .8s,visibility .8s}
+#cover.gone{opacity:0;visibility:hidden}
+.env{width:min(280px,70vw);aspect-ratio:1.4;background:var(--rose);border-radius:10px;position:relative;box-shadow:var(--shadow);cursor:pointer;border:0;padding:0;transition:transform .3s}
+.env:hover{transform:translateY(-4px) scale(1.02)}
+.env::before{content:"";position:absolute;inset:0;background:linear-gradient(to bottom right,transparent 49%,rgba(0,0,0,.12) 50%) left/50% 100% no-repeat,linear-gradient(to bottom left,transparent 49%,rgba(0,0,0,.12) 50%) right/50% 100% no-repeat;border-radius:10px}
+.env span{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:2rem;z-index:2;animation:beat 1.4s infinite}
+@keyframes beat{50%{transform:translate(-50%,-50%) scale(1.25)}}
+#cover p{color:var(--mute);margin-top:22px;font-weight:300}
+#cover h2{margin-bottom:26px;font-size:1.6rem}
+main{position:relative;z-index:2;max-width:900px;margin:0 auto;padding:0 20px 60px}
+section{padding:70px 0 10px}
+.hero{min-height:92vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.eyebrow{letter-spacing:.3em;text-transform:uppercase;font-size:.75rem;color:var(--mute)}
+.big{font-size:clamp(5rem,26vw,11rem);color:var(--rose);line-height:1;font-weight:700}
+.hero h1{font-size:clamp(1.6rem,6vw,2.6rem);font-style:italic;font-weight:500}
+.hero p{max-width:480px;color:var(--mute);font-weight:300}
+.stats{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:18px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 20px;box-shadow:var(--shadow)}
+.stat b{display:block;font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--rose)}
+.stat small{color:var(--mute);font-size:.75rem}
+.title{text-align:center;margin-bottom:28px}
+.title h2{font-size:clamp(1.6rem,5vw,2.2rem)}
+.title p{color:var(--mute);margin:4px 0 0;font-size:.9rem}
+.letter{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:clamp(22px,5vw,46px);box-shadow:var(--shadow)}
+.letter p{margin:0 0 14px;min-height:1px}
+.letter .sig{text-align:right;font-family:'Playfair Display',serif;font-style:italic;color:var(--rose);font-size:1.2rem;margin:20px 0 0}
+.cursor{display:inline-block;width:2px;height:1em;background:var(--rose);vertical-align:-2px;animation:blink 1s infinite}
+@keyframes blink{50%{opacity:0}}
+.skip{display:block;margin:14px auto 0;background:none;border:0;color:var(--mute);font:inherit;font-size:.8rem;cursor:pointer;text-decoration:underline}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.rc{perspective:700px;height:130px;border:0;background:none;padding:0;cursor:pointer;font:inherit}
+.rc i{position:absolute;inset:0;border-radius:14px;display:flex;align-items:center;justify-content:center;text-align:center;padding:12px;backface-visibility:hidden;transition:transform .6s;font-style:normal;border:1px solid var(--line)}
+.rc{position:relative}
+.rc .f{background:var(--card);box-shadow:var(--shadow);font-family:'Playfair Display',serif;font-size:2rem;color:var(--rose)}
+.rc .b{background:var(--rose);color:#fff;transform:rotateY(180deg);font-size:.85rem;line-height:1.4}
+.rc.on .f{transform:rotateY(-180deg)}.rc.on .b{transform:rotateY(0)}
+.meter{height:8px;background:var(--line);border-radius:8px;margin:0 auto 22px;max-width:320px;overflow:hidden}
+.meter div{height:100%;width:0;background:var(--rose);transition:width .4s}
+.tl{position:relative;margin:0 auto;max-width:560px;padding-left:28px;border-left:2px solid var(--rose2)}
+.tl div{position:relative;margin-bottom:22px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 18px}
+.tl div::before{content:"";position:absolute;left:-37px;top:18px;width:14px;height:14px;border-radius:50%;background:var(--rose);border:3px solid var(--bg)}
+.tl b{color:var(--rose);font-family:'Playfair Display',serif}
+.tl p{margin:2px 0 0;color:var(--mute);font-size:.9rem}
+.end{text-align:center;padding-top:80px}
+.btn{background:var(--rose);color:#fff;border:0;border-radius:999px;padding:14px 32px;font:500 1rem Poppins,sans-serif;cursor:pointer;box-shadow:var(--shadow);transition:transform .2s}
+.btn:hover{transform:scale(1.05)}
+.end h2{margin:26px 0 6px;font-size:1.7rem}
+.end p{color:var(--mute)}
+#tools{position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:20;display:flex;gap:8px}
+#tools button{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;font-size:1.1rem;box-shadow:var(--shadow)}
+.rv{opacity:0;transform:translateY(24px);transition:opacity .8s,transform .8s}.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<canvas id="fx"></canvas>
+
+<div id="cover">
+  <h2>Para sa iyo, Khizha 💌</h2>
+  <button class="env" id="open" aria-label="Open the letter"><span>❤</span></button>
+  <p>Tap the envelope to open</p>
+</div>
+
+<main>
+  <section class="hero rv">
+    <div class="eyebrow">Happy Monthsary</div>
+    <div class="big" id="num">20</div>
+    <h1>Months of Us</h1>
+    <p>Twenty months of laughter, late-night talks, and choosing each other every single day.</p>
+    <div class="stats" id="stats"></div>
+  </section>
+
+  <section id="letter" class="rv">
+    <div class="title"><h2>A Letter for You</h2><p>from me, with all my heart</p></div>
+    <div class="letter"><div id="lt"></div><p class="sig" id="sig" style="opacity:0">— CJ</p></div>
+    <button class="skip" id="skip">Show full letter</button>
+  </section>
+
+  <section id="reasons" class="rv">
+    <div class="title"><h2>20 Reasons I Love You</h2><p>Tap a card to reveal</p></div>
+    <div class="meter"><div id="mb"></div></div>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <section id="journey" class="rv">
+    <div class="title"><h2>Our Journey</h2><p>A few moments I will always keep</p></div>
+    <div class="tl" id="tl"></div>
+  </section>
+
+  <section class="end rv">
+    <button class="btn" id="boom">Tap for a surprise 🎉</button>
+    <h2>Happy 20th Monthsary, mahal.</h2>
+    <p>Here is to 20 more, and then some.</p>
+  </section>
+</main>
+
+<div id="tools">
+  <button id="theme" aria-label="Toggle theme">🌓</button>
+  <button id="top" aria-label="Back to top">↑</button>
+</div>
+
+<script>
+/* ===== EDIT THIS PART ===== */
+var CFG = {
+  to: "Khizha",
+  from: "CJ",
+  startDate: "", // optional, e.g. "2025-02-21" — shows days together
+  letter: [
+    "Hi Khizha,",
+    "Twenty months na pala. Minsan hindi ko pa rin ma-believe na ganito na tayo katagal, pero sa totoo lang, parang kahapon lang noong nagsimula tayo.",
+    "Thank you for staying, for understanding me on days I am hard to understand, and for making ordinary days feel special. Ikaw ang paborito kong tao na kausap, kasama, at uwian.",
+    "Hindi ako perfect, pero ipinapangako ko na pipiliin pa rin kita, ngayon at sa lahat ng susunod na buwan.",
+    "Happy 20th monthsary. Mahal na mahal kita."
+  ],
+  reasons: [
+    "Your smile makes my whole day better","You listen, even when I ramble","You are so kind to everyone",
+    "Your laugh is my favorite sound","You believe in me","You make plain days feel special",
+    "You are patient with me","You are my safe place","You care about the little things",
+    "You support my dreams","You are beautiful inside and out","You make me want to be better",
+    "You are my best friend","Your hugs fix everything","You stay, even when it is hard",
+    "You make me laugh the most","You are so genuine","You are thoughtful and sweet",
+    "With you, home feels like a person","Because it is you, always you"
+  ],
+  moments: [
+    ["Month 1","The beginning. Nervous, excited, and already smiling like crazy."],
+    ["Month 5","When I knew this was something really special."],
+    ["Month 10","Halfway to 20, and every day felt easier with you."],
+    ["Month 15","We got through the hard days together."],
+    ["Month 20","Here we are. Still choosing each other."]
+  ]
+};
+/* ========================== */
+var $=function(i){return document.getElementById(i)};
+document.title="Happy 20th Monthsary, "+CFG.to;
+$("sig").textContent="— "+CFG.from;
+
+/* stats */
+(function(){
+  var s=[["20","months"],["≈600","days"],["∞","reasons"]];
+  if(CFG.startDate){var d=Math.floor((Date.now()-new Date(CFG.startDate))/864e5);if(d>0)s[1]=[d.toLocaleString(),"days together"];}
+  $("stats").innerHTML=s.map(function(x){return '<div class="stat"><b>'+x[0]+'</b><small>'+x[1]+'</small></div>'}).join("");
+})();
+
+/* reasons */
+(function(){
+  var seen=0,total=CFG.reasons.length;
+  $("grid").innerHTML=CFG.reasons.map(function(r,i){return '<button class="rc" aria-label="Reason '+(i+1)+'"><i class="f">'+(i+1)+'</i><i class="b">'+r+'</i></button>'}).join("");
+  $("grid").addEventListener("click",function(e){
+    var c=e.target.closest(".rc");if(!c)return;
+    var on=c.classList.toggle("on");
+    seen=document.querySelectorAll(".rc.on").length;
+    $("mb").style.width=(seen/total*100)+"%";
+    if(on)burst(e.clientX,e.clientY,8);
+    if(seen===total)setTimeout(function(){burst(innerWidth/2,innerHeight/2,60)},300);
+  });
+})();
+
+/* timeline */
+$("tl").innerHTML=CFG.moments.map(function(m){return '<div><b>'+m[0]+'</b><p>'+m[1]+'</p></div>'}).join("");
+
+/* typed letter */
+var typed=false,skipT=false;
+function typeLetter(){
+  if(typed)return;typed=true;
+  var box=$("lt"),ps=CFG.letter.map(function(t){var p=document.createElement("p");box.appendChild(p);return p}),i=0,j=0;
+  var cur=document.createElement("span");cur.className="cursor";
+  function fin(){cur.remove();$("sig").style.opacity=1;$("skip").style.display="none";}
+  function step(){
+    if(skipT){ps.forEach(function(p,k){p.textContent=CFG.letter[k]});return fin();}
+    if(i>=ps.length)return fin();
+    var t=CFG.letter[i];
+    if(j<t.length){ps[i].textContent=t.slice(0,++j);ps[i].appendChild(cur);setTimeout(step,22);}
+    else{i++;j=0;setTimeout(step,350);}
+  }
+  step();
+}
+$("skip").onclick=function(){skipT=true;if(!typed)typeLetter()};
+
+/* reveal on scroll */
+var io=new IntersectionObserver(function(es){es.forEach(function(e){
+  if(e.isIntersecting){e.target.classList.add("in");if(e.target.id==="letter")typeLetter();}
+})},{threshold:.2});
+document.querySelectorAll(".rv").forEach(function(el){io.observe(el)});
+
+/* hearts + confetti canvas */
+var cv=$("fx"),cx=cv.getContext("2d"),P=[];
+function fit(){cv.width=innerWidth;cv.height=innerHeight}
+fit();addEventListener("resize",fit);
+function burst(x,y,n){
+  var cols=["#c8456b","#f3b6c6","#ffd166","#ee7f9f","#fff"];
+  for(var k=0;k<n;k++){var a=Math.random()*6.28,v=2+Math.random()*5;
+    P.push({x:x,y:y,vx:Math.cos(a)*v,vy:Math.sin(a)*v-3,g:.12,life:90,s:6+Math.random()*8,c:cols[k%5],h:Math.random()<.5});}
+}
+function drift(){
+  if(Math.random()<.04)P.push({x:Math.random()*cv.width,y:cv.height+10,vx:(Math.random()-.5)*.6,vy:-1-Math.random(),g:0,life:300,s:8+Math.random()*10,c:"rgba(200,69,107,.35)",h:true});
+}
+function heart(x,y,s,c){cx.fillStyle=c;cx.font=s*1.6+"px serif";cx.textAlign="center";cx.fillText("❤",x,y);}
+function loop(){
+  cx.clearRect(0,0,cv.width,cv.height);drift();
+  P=P.filter(function(p){
+    p.x+=p.vx;p.y+=p.vy;p.vy+=p.g;p.life--;
+    cx.globalAlpha=Math.max(0,Math.min(1,p.life/40));
+    if(p.h){heart(p.x,p.y,p.s,p.c)}else{cx.fillStyle=p.c;cx.fillRect(p.x,p.y,p.s,p.s*.6)}
+    return p.life>0;
+  });
+  cx.globalAlpha=1;requestAnimationFrame(loop);
+}
+loop();
+
+/* controls */
+$("open").onclick=function(){$("cover").classList.add("gone");burst(innerWidth/2,innerHeight/2,50);};
+$("boom").onclick=function(e){for(var k=0;k<5;k++)setTimeout(function(){burst(Math.random()*innerWidth,innerHeight*.4,40)},k*250)};
+$("top").onclick=function(){scrollTo({top:0})};
+$("theme").onclick=function(){
+  var r=document.documentElement,dark=r.getAttribute("data-theme")?r.getAttribute("data-theme")==="dark":matchMedia("(prefers-color-scheme:dark)").matches;
+  r.setAttribute("data-theme",dark?"light":"dark");
+};
+</script>
+</body>
+</html>
